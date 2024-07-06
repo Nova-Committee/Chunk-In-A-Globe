@@ -15,7 +15,13 @@ import static committee.nova.mods.dg.ModRegistries.*;
 @Mod(Constants.MOD_ID)
 public class DimensionGlobeForge {
     public DimensionGlobeForge() {
+        CommonClass.managerServer = new ForgeGlobeSectionManagerServer();
+        CommonClass.dimensionHelper= new ForgeDimensionHelper();
+
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::commonSetUp);
+        bus.addListener(this::clientSetUp);
+
         ModRegistries.BLOCKS.register(bus);
         ModRegistries.ITEMS.register(bus);
         ModRegistries.BLOCK_ENTITIES.register(bus);
@@ -23,13 +29,7 @@ public class DimensionGlobeForge {
         ModRegistries.SERIALIZERS.register(bus);
 
         //CommonClass.init();
-        CommonClass.managerServer = new ForgeGlobeSectionManagerServer();
-        CommonClass.dimensionHelper= new ForgeDimensionHelper();
-
         //Registry.register(BuiltInRegistries.CHUNK_GENERATOR, globeID, VoidChunkGenerator.CODEC);
-
-        bus.addListener(this::commonSetUp);
-        bus.addListener(this::clientSetUp);
     }
 
     public void commonSetUp(FMLCommonSetupEvent event){
