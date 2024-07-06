@@ -27,9 +27,7 @@ public class DimensionGlobeForge {
         ModRegistries.BLOCK_ENTITIES.register(bus);
         ModRegistries.TABS.register(bus);
         ModRegistries.SERIALIZERS.register(bus);
-
-        //CommonClass.init();
-        //Registry.register(BuiltInRegistries.CHUNK_GENERATOR, globeID, VoidChunkGenerator.CODEC);
+        ModRegistries.CHUNK_GENERATOR.register(bus);
     }
 
     public void commonSetUp(FMLCommonSetupEvent event){

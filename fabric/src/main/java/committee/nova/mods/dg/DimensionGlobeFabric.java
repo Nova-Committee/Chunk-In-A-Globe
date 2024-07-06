@@ -36,36 +36,34 @@ public class DimensionGlobeFabric implements ModInitializer {
 		globeBlock = new GlobeBlock();
 		globeBlockItem = new FabricGlobeBlockItem(globeBlock, new Item.Properties());
 		globeCrafting = new SimpleCraftingRecipeSerializer<>(GlobeCraftingRecipe::new);
-
-		CommonClass.managerServer = new FabricGlobeSectionManagerServer();
-		CommonClass.dimensionHelper = new FabricDimensionHelper();
-		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Constants.rl("globe_crafting"), globeCrafting);
-		Registry.register(BuiltInRegistries.BLOCK, globeID, globeBlock);
-		CommonClass.globeBlockItem.registerBlocks(Item.BY_BLOCK, globeBlockItem);
-		Registry.register(BuiltInRegistries.ITEM, globeID, globeBlockItem);
-
-		CommonClass.globeItemGroup = FabricItemGroup.builder()
+		globeBlockEntityType = FabricBlockEntityTypeBuilder.create(GlobeBlockEntity::new, globeBlock).build(null);
+		globeItemGroup = FabricItemGroup.builder()
 				.title(Component.literal("Globes"))
-			    .icon(() -> new ItemStack(globeBlockItem))
+				.icon(() -> new ItemStack(globeBlockItem))
 				.displayItems((context, entries) -> {
 					for (Block block : BuiltInRegistries.BLOCK.stream().toList()) {
 						if (block.defaultBlockState().is(CommonClass.BASE_BLOCK_TAG)) {
 							entries.accept(CommonClass.globeBlockItem.getWithBase(block));
 						}
 					}
-			        entries.accept(globeBlockItem);
-			    })
-			    .build();
+					entries.accept(globeBlockItem);
+				})
+				.build();
+		globeBlockItem.registerBlocks(Item.BY_BLOCK, globeBlockItem);
 
-		CommonClass.globeBlockEntityType = FabricBlockEntityTypeBuilder.create(GlobeBlockEntity::new, globeBlock).build(null);
+		managerServer = new FabricGlobeSectionManagerServer();
+		dimensionHelper = new FabricDimensionHelper();
+
+		Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, globeID, globeItemGroup);
+		Registry.register(BuiltInRegistries.BLOCK, globeID, globeBlock);
+		Registry.register(BuiltInRegistries.ITEM, globeID, globeBlockItem);
 		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, globeID, CommonClass.globeBlockEntityType);
-
 		Registry.register(BuiltInRegistries.CHUNK_GENERATOR, globeID, VoidChunkGenerator.CODEC);
+		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Constants.rl("globe_crafting"), globeCrafting);
+
 
 		ServerTickEvents.START_WORLD_TICK.register(BaseEventHandler::onWorldLTickPre);
-
 		AttackBlockCallback.EVENT.register((playerEntity, world, hand, blockPos, direction) -> BaseEventHandler.onLeftClickBlock(world, blockPos ));
-
 		UseBlockCallback.EVENT.register((playerEntity, world, hand, blockHitResult) -> BaseEventHandler.onRightClickBlock(world, playerEntity, hand));
 
 		ServerPlayNetworking.registerGlobalReceiver(Constants.rl( "update_request"), (server, player, handler, packetByteBuf, responseSender) -> {

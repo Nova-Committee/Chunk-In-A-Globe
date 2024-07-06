@@ -1,6 +1,8 @@
 package committee.nova.mods.dg;
 
+import com.mojang.serialization.Codec;
 import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.crafting.GlobeCraftingRecipe;
 import committee.nova.mods.dg.common.item.ForgeGlobeBlockItem;
 import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import committee.nova.mods.dg.common.item.GlobeBlockItem;
@@ -12,9 +14,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,12 +46,12 @@ public class ModRegistries {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Constants.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MOD_ID);
-    //private static final DeferredRegister<Codec<? extends ChunkGenerator>> CHUNK_GENERATOR = DeferredRegister.create(Registries.CHUNK_GENERATOR, Constants.MOD_ID);
+    public static final DeferredRegister<Codec<? extends ChunkGenerator>> CHUNK_GENERATOR = DeferredRegister.create(Registries.CHUNK_GENERATOR, Constants.MOD_ID);
 
     public static RegistryObject<GlobeBlock> globeBlock1 = BLOCKS.register("globe", GlobeBlock::new);
     public static RegistryObject<GlobeBlockItem> globeBlockItem1 = ITEMS.register("globe", () ->  new ForgeGlobeBlockItem(globeBlock1.get(), new Item.Properties()));
     public static RegistryObject<BlockEntityType<GlobeBlockEntity>> globeBlockEntityType1 = blockEntity("globe", GlobeBlockEntity::new, () -> new Block[]{globeBlock1.get()});
-    //public static RegistryObject<RecipeSerializer<GlobeCraftingRecipe>> globeCrafting1 = serializer("globe", () -> new SimpleCraftingRecipeSerializer<>(GlobeCraftingRecipe::new));
+    public static RegistryObject<RecipeSerializer<GlobeCraftingRecipe>> globeCrafting1 = serializer("globe", () -> new SimpleCraftingRecipeSerializer<>(GlobeCraftingRecipe::new));
     public static RegistryObject<CreativeModeTab> globeItemGroup1 = TABS.register("globe_group", () -> CreativeModeTab.builder()
             .title(Component.literal("Globes"))
             .icon(() -> new ItemStack(globeBlockItem1.get()))
@@ -61,14 +65,7 @@ public class ModRegistries {
             })
             .build());
 
-    //public static RegistryObject<Codec<VoidChunkGenerator>> VOID_CHUNK = CHUNK_GENERATOR.register("globe", () -> VoidChunkGenerator.CODEC);
-
-    @SubscribeEvent
-    public static void init(RegisterEvent event) {
-        event.register(Registries.CHUNK_GENERATOR, helper -> {
-            helper.register(globeID, VoidChunkGenerator.CODEC);
-        });
-    }
+    public static RegistryObject<Codec<VoidChunkGenerator>> VOID_CHUNK = CHUNK_GENERATOR.register("globe", () -> VoidChunkGenerator.CODEC);
 
     public static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> blockEntity(String name, BlockEntityType.BlockEntitySupplier<T> tile, Supplier<Block[]> blocks) {
         return BLOCK_ENTITIES.register(name, () -> BlockEntityType.Builder.of(tile, blocks.get()).build(null));
