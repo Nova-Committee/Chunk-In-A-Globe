@@ -49,6 +49,12 @@ subprojects {
             name = "Ladysnake Mods"
             url = 'https://maven.ladysnake.org/releases'
         }
+        maven {
+            url = "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {

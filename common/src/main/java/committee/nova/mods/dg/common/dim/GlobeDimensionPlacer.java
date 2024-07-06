@@ -1,7 +1,7 @@
 package committee.nova.mods.dg.common.dim;
 
 import committee.nova.mods.dg.CommonClass;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import committee.nova.mods.dg.utils.GlobeManager;
 import committee.nova.mods.dg.utils.GlobeSection;
 import net.minecraft.core.BlockPos;

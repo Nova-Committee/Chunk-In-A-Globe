@@ -1,4 +1,4 @@
-package committee.nova.mods.dg.globe;
+package committee.nova.mods.dg.common.world;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

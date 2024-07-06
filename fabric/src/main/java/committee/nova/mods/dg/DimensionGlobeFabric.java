@@ -1,15 +1,15 @@
 package committee.nova.mods.dg;
 
+import committee.nova.mods.dg.common.item.FabricGlobeBlockItem;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import committee.nova.mods.dg.common.crafting.GlobeCraftingRecipe;
 import committee.nova.mods.dg.events.BaseEventHandler;
-import committee.nova.mods.dg.globe.GlobeBlock;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
-import committee.nova.mods.dg.globe.GlobeBlockItem;
-import committee.nova.mods.dg.globe.VoidChunkGenerator;
-import committee.nova.mods.dg.net.FabricGlobeSectionManagerServer;
-import committee.nova.mods.dg.net.pkt.FabricUpdateRequestPkt;
+import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
+import committee.nova.mods.dg.common.world.VoidChunkGenerator;
+import committee.nova.mods.dg.common.net.FabricGlobeSectionManagerServer;
+import committee.nova.mods.dg.common.net.pkt.FabricUpdateRequestPkt;
 import committee.nova.mods.dg.utils.FabricDimensionHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -34,7 +34,7 @@ public class DimensionGlobeFabric implements ModInitializer {
 	public void onInitialize() {
 		//CommonClass.init();
 		globeBlock = new GlobeBlock();
-		globeBlockItem = new GlobeBlockItem(globeBlock, new Item.Properties());
+		globeBlockItem = new FabricGlobeBlockItem(globeBlock, new Item.Properties());
 		globeCrafting = new SimpleCraftingRecipeSerializer<>(GlobeCraftingRecipe::new);
 
 		CommonClass.managerServer = new FabricGlobeSectionManagerServer();

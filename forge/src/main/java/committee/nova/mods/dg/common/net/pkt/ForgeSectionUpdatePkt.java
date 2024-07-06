@@ -1,4 +1,4 @@
-package committee.nova.mods.dg.net.pkt;
+package committee.nova.mods.dg.common.net.pkt;
 
 import committee.nova.mods.dg.common.net.SectionUpdatePkt;
 import net.minecraftforge.network.NetworkDirection;

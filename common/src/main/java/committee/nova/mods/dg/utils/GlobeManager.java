@@ -2,7 +2,7 @@ package committee.nova.mods.dg.utils;
 
 import committee.nova.mods.dg.CommonClass;
 import committee.nova.mods.dg.Constants;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import it.unimi.dsi.fastutil.ints.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

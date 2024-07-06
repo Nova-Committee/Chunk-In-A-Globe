@@ -1,5 +1,10 @@
 package committee.nova.mods.dg.platform.services;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Block;
+
 public interface IPlatformHelper {
 
     /**
@@ -32,5 +37,21 @@ public interface IPlatformHelper {
     default String getEnvironmentName() {
 
         return isDevelopmentEnvironment() ? "development" : "production";
+    }
+
+    default Block getBlockByKey(ResourceLocation key){
+      return BuiltInRegistries.BLOCK.get(key);
+    }
+
+    default ResourceLocation getKeyByBlock(Block block){
+        return BuiltInRegistries.BLOCK.getKey(block);
+    }
+
+    default EntityType<?> getEntityTypeByKey(ResourceLocation key){
+        return BuiltInRegistries.ENTITY_TYPE.get(key);
+    }
+
+    default ResourceLocation getKeyByEntityType(EntityType<?> entityType){
+        return BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
     }
 }

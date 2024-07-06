@@ -1,7 +1,6 @@
-package committee.nova.mods.dg.net;
+package committee.nova.mods.dg.common.net;
 
-import committee.nova.mods.dg.common.net.SectionUpdatePkt;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import committee.nova.mods.dg.utils.GlobeManager;
 import committee.nova.mods.dg.utils.GlobeSection;
 import committee.nova.mods.dg.utils.GlobeSectionManagerServer;
@@ -31,6 +30,8 @@ public class ForgeGlobeSectionManagerServer extends GlobeSectionManagerServer {
             pkt.blocks = false;
             pkt.tag = section.toEntityTag(blockEntity.isInner() ? blockEntity.getInnerScanPos() : globe.getGlobeLocation());
         }
-        NetWorkDispatcher.CHANNEL.send(PacketDistributor.ALL.noArg(), pkt);
+        for (ServerPlayer player : nearbyPlayers) {
+            NetWorkDispatcher.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), pkt);
+        }
     }
 }

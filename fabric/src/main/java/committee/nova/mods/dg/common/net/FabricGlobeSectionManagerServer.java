@@ -1,8 +1,8 @@
-package committee.nova.mods.dg.net;
+package committee.nova.mods.dg.common.net;
 
 import io.netty.buffer.Unpooled;
 import committee.nova.mods.dg.Constants;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import committee.nova.mods.dg.utils.GlobeManager;
 import committee.nova.mods.dg.utils.GlobeSection;
 import committee.nova.mods.dg.utils.GlobeSectionManagerServer;

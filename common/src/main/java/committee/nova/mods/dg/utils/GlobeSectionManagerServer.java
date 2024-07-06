@@ -1,7 +1,7 @@
 package committee.nova.mods.dg.utils;
 
 import committee.nova.mods.dg.CommonClass;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -13,7 +13,7 @@ public abstract class GlobeSectionManagerServer {
 
 	public void updateAndSyncToPlayers(GlobeBlockEntity blockEntity, boolean blocks) {
 		if (blockEntity.getLevel().isClientSide) {
-			throw new RuntimeException();
+			return;
 		}
 
 		if (blockEntity.getGlobeID() == -1) {

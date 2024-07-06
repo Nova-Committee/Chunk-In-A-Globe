@@ -1,14 +1,14 @@
 package committee.nova.mods.dg;
 
+import committee.nova.mods.dg.client.FabricGlobeItemRenderer;
 import io.netty.buffer.Unpooled;
-import committee.nova.mods.dg.CommonClass;
-import committee.nova.mods.dg.Constants;
 import committee.nova.mods.dg.common.net.SectionUpdatePkt;
-import committee.nova.mods.dg.globe.GlobeBlockEntityRenderer;
-import committee.nova.mods.dg.globe.GlobeBlockItem;
+import committee.nova.mods.dg.client.render.GlobeBlockEntityRenderer;
+import committee.nova.mods.dg.common.item.GlobeBlockItem;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,7 +20,8 @@ import static committee.nova.mods.dg.utils.GlobeSectionManagerClient.innerSelect
 public class DimensionGlobeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		BlockEntityRenderers.register(CommonClass.globeBlockEntityType, (context) -> new GlobeBlockEntityRenderer());
+		BuiltinItemRendererRegistry.INSTANCE.register(CommonClass.globeBlockItem, new FabricGlobeItemRenderer());
+		BlockEntityRenderers.register(CommonClass.globeBlockEntityType, GlobeBlockEntityRenderer::new);
 		ClientPlayNetworking.registerGlobalReceiver(Constants.rl( "section_update"), (client, packetContext, packetByteBuf, sender) -> {
 			final int id = packetByteBuf.readInt();
 			final boolean inner = packetByteBuf.readBoolean();

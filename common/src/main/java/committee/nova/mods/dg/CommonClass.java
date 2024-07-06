@@ -2,9 +2,9 @@ package committee.nova.mods.dg;
 
 
 import committee.nova.mods.dg.common.crafting.GlobeCraftingRecipe;
-import committee.nova.mods.dg.globe.GlobeBlock;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
-import committee.nova.mods.dg.globe.GlobeBlockItem;
+import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
+import committee.nova.mods.dg.common.item.GlobeBlockItem;
 import committee.nova.mods.dg.utils.DimensionHelper;
 import committee.nova.mods.dg.utils.GlobeSectionManagerServer;
 import net.minecraft.core.registries.Registries;

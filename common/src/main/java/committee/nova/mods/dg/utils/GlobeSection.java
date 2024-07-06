@@ -1,8 +1,9 @@
 package committee.nova.mods.dg.utils;
 
 import com.mojang.authlib.GameProfile;
-import committee.nova.mods.dg.globe.GlobeBlock;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
+import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
+import committee.nova.mods.dg.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.RemotePlayer;
@@ -63,9 +64,7 @@ public class GlobeSection {
 	public void buildEntityList(Level world, BlockPos origin) {
 		entities.clear();
 		entityVec3dMap.clear();
-		for (Entity entity : world.getEntities(null, new AABB(origin.getX(), origin.getY(), origin.getZ(), origin.getX() + GLOBE_SIZE, origin.getY() + GLOBE_SIZE, origin.getZ() + GLOBE_SIZE))) {
-			entities.add(entity);
-		}
+        entities.addAll(world.getEntities(null, new AABB(origin.getX(), origin.getY(), origin.getZ(), origin.getX() + GLOBE_SIZE, origin.getY() + GLOBE_SIZE, origin.getZ() + GLOBE_SIZE)));
 	}
 
 	public void fromBlockTag(CompoundTag tag) {
@@ -121,8 +120,8 @@ public class GlobeSection {
 				continue;
 			}
 
-			if (BuiltInRegistries.ENTITY_TYPE.getOptional(entityType).isPresent()) {
-				EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entityType);
+			if (Services.PLATFORM.getEntityTypeByKey(entityType) != null) {
+				EntityType<?> type = Services.PLATFORM.getEntityTypeByKey(entityType);
 				Entity entity = type.create(world);
 
 				if (entity == null) {
@@ -145,7 +144,7 @@ public class GlobeSection {
 		CompoundTag compoundTag = new CompoundTag();
 		for (Entity entity : entities) {
 			CompoundTag entityTag = new CompoundTag();
-			ResourceLocation entityType = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+			ResourceLocation entityType = Services.PLATFORM.getKeyByEntityType(entity.getType());
 			entityTag.putString("entity_type", entityType.toString());
 			CompoundTag entityData = new CompoundTag();
 			entity.save(entityData);

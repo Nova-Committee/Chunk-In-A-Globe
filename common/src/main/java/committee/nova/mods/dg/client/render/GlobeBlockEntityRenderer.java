@@ -1,18 +1,24 @@
-package committee.nova.mods.dg.globe;
+package committee.nova.mods.dg.client.render;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import committee.nova.mods.dg.CommonClass;
 import committee.nova.mods.dg.Constants;
+import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import committee.nova.mods.dg.utils.GlobeSection;
 import committee.nova.mods.dg.utils.GlobeSectionManagerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -24,7 +30,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Math;
 
 import java.util.*;
@@ -32,11 +40,17 @@ import java.util.*;
 public class GlobeBlockEntityRenderer implements BlockEntityRenderer<GlobeBlockEntity> {
 
 	private static int renderDepth = 0;
-
+	public GlobeBlockEntityRenderer(BlockEntityRendererProvider.Context p_173636_) {
+//		this.signModels = WoodType.values().collect(ImmutableMap.toImmutableMap((p_173645_) -> {
+//			return p_173645_;
+//		}, (p_173651_) -> {
+//			return new SignRenderer.SignModel(p_173636_.bakeLayer(ModelLayers.createSignModelName(p_173651_)));
+//		}));
+	}
 
 	@Override
-	public void render(GlobeBlockEntity blockEntity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
-		final boolean inner = blockEntity.getLevel().dimension().equals(CommonClass.globeDimension);
+	public void render(GlobeBlockEntity blockEntity, float tickDelta, @NotNull PoseStack matrices, @NotNull MultiBufferSource vertexConsumers, int light, int overlay) {
+		final boolean inner = Objects.requireNonNull(blockEntity.getLevel()).dimension().equals(CommonClass.globeDimension);
 		renderGlobe(inner, blockEntity.getGlobeID(), matrices, vertexConsumers, light);
 		if (inner) {
 			matrices.pushPose();

@@ -1,9 +1,9 @@
-package committee.nova.mods.dg.globe;
+package committee.nova.mods.dg.common.tile;
 
 import committee.nova.mods.dg.CommonClass;
 import committee.nova.mods.dg.common.dim.ExitPlacer;
 import committee.nova.mods.dg.common.dim.GlobeDimensionPlacer;
-import committee.nova.mods.dg.utils.DimensionHelper;
+import committee.nova.mods.dg.platform.Services;
 import committee.nova.mods.dg.utils.GlobeManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,23 +46,17 @@ public class GlobeBlockEntity extends BlockEntity {
 			}
 		}
 		if (!world.isClientSide) {
-			if (world.getGameTime() % 20 == 0) {
-				CommonClass.managerServer.updateAndSyncToPlayers(entity, true);
-			} else {
-				CommonClass.managerServer.updateAndSyncToPlayers(entity, false);
-			}
+            CommonClass.managerServer.updateAndSyncToPlayers(entity, world.getGameTime() % 20 == 0);
 		}
 	}
 
 	@Override
-	 public void load(CompoundTag tag) {
+	 public void load(@NotNull CompoundTag tag) {
 		super.load(tag);
 		globeID = tag.getInt("globe_id");
 		if (tag.contains("base_block")) {
 			ResourceLocation identifier = new ResourceLocation(tag.getString("base_block"));
-			if (BuiltInRegistries.BLOCK.getOptional(identifier).isPresent()) {
-				baseBlock = BuiltInRegistries.BLOCK.get(identifier);
-			}
+			baseBlock =  Services.PLATFORM.getBlockByKey(identifier);
 		}
 		if (tag.contains("return_x")) {
 			returnPos = new BlockPos(tag.getInt("return_x"), tag.getInt("return_y"), tag.getInt("return_z"));
@@ -76,7 +70,7 @@ public class GlobeBlockEntity extends BlockEntity {
 	public void saveAdditional(CompoundTag tag) {
 		tag.putInt("globe_id", globeID);
 		if (baseBlock != null) {
-			tag.putString("base_block", BuiltInRegistries.BLOCK.getKey(baseBlock).toString());
+			tag.putString("base_block",  Services.PLATFORM.getKeyByBlock(baseBlock).toString());
 		}
 
 		if (returnPos != null && returnDimType != null) {

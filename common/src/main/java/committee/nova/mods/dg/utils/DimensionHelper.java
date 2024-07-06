@@ -13,7 +13,6 @@ import net.minecraft.world.level.portal.PortalInfo;
  * @date 2024/5/16 下午11:19
  */
 public abstract class DimensionHelper {
-    @SuppressWarnings("unchecked")
     public void changeDimension(Entity teleported, ServerLevel dimension, PortalInfo target) {
 
     }

@@ -1,9 +1,10 @@
 package committee.nova.mods.dg;
 
-import committee.nova.mods.dg.globe.GlobeBlock;
-import committee.nova.mods.dg.globe.GlobeBlockEntity;
-import committee.nova.mods.dg.globe.GlobeBlockItem;
-import committee.nova.mods.dg.globe.VoidChunkGenerator;
+import committee.nova.mods.dg.common.block.GlobeBlock;
+import committee.nova.mods.dg.common.item.ForgeGlobeBlockItem;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
+import committee.nova.mods.dg.common.item.GlobeBlockItem;
+import committee.nova.mods.dg.common.world.VoidChunkGenerator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -44,7 +45,7 @@ public class ModRegistries {
     //private static final DeferredRegister<Codec<? extends ChunkGenerator>> CHUNK_GENERATOR = DeferredRegister.create(Registries.CHUNK_GENERATOR, Constants.MOD_ID);
 
     public static RegistryObject<GlobeBlock> globeBlock1 = BLOCKS.register("globe", GlobeBlock::new);
-    public static RegistryObject<GlobeBlockItem> globeBlockItem1 = ITEMS.register("globe", () ->  new GlobeBlockItem(globeBlock1.get(), new Item.Properties()));
+    public static RegistryObject<GlobeBlockItem> globeBlockItem1 = ITEMS.register("globe", () ->  new ForgeGlobeBlockItem(globeBlock1.get(), new Item.Properties()));
     public static RegistryObject<BlockEntityType<GlobeBlockEntity>> globeBlockEntityType1 = blockEntity("globe", GlobeBlockEntity::new, () -> new Block[]{globeBlock1.get()});
     //public static RegistryObject<RecipeSerializer<GlobeCraftingRecipe>> globeCrafting1 = serializer("globe", () -> new SimpleCraftingRecipeSerializer<>(GlobeCraftingRecipe::new));
     public static RegistryObject<CreativeModeTab> globeItemGroup1 = TABS.register("globe_group", () -> CreativeModeTab.builder()

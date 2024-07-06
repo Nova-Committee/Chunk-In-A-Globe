@@ -1,6 +1,7 @@
-package committee.nova.mods.dg.globe;
+package committee.nova.mods.dg.common.block;
 
 import committee.nova.mods.dg.CommonClass;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -38,7 +40,7 @@ public class GlobeBlock extends BaseEntityBlock {
 
 
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level world, @NotNull BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!world.isClientSide) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof GlobeBlockEntity) {
@@ -55,12 +57,12 @@ public class GlobeBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+	public @NotNull List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
 		return Collections.emptyList();
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState $$2) {
+	public @NotNull ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState $$2) {
 		return getDroppedStack(world, pos);
 	}
 
@@ -76,7 +78,7 @@ public class GlobeBlock extends BaseEntityBlock {
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level world, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
 		return createTickerHelper(type, CommonClass.globeBlockEntityType, GlobeBlockEntity::tick);
 	}
 

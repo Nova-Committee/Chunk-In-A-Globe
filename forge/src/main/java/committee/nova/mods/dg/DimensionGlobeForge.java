@@ -1,7 +1,7 @@
 package committee.nova.mods.dg;
 
-import committee.nova.mods.dg.globe.GlobeBlockEntityRenderer;
-import committee.nova.mods.dg.net.ForgeGlobeSectionManagerServer;
+import committee.nova.mods.dg.client.render.GlobeBlockEntityRenderer;
+import committee.nova.mods.dg.common.net.ForgeGlobeSectionManagerServer;
 import committee.nova.mods.dg.utils.ForgeDimensionHelper;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraftforge.fml.common.Mod;
@@ -41,6 +41,6 @@ public class DimensionGlobeForge {
     }
 
     public void clientSetUp(FMLClientSetupEvent event){
-        BlockEntityRenderers.register(CommonClass.globeBlockEntityType, (context) -> new GlobeBlockEntityRenderer());
+        BlockEntityRenderers.register(CommonClass.globeBlockEntityType, GlobeBlockEntityRenderer::new);
     }
 }

@@ -1,6 +1,8 @@
-package committee.nova.mods.dg.globe;
+package committee.nova.mods.dg.common.item;
 
 import committee.nova.mods.dg.CommonClass;
+import committee.nova.mods.dg.common.tile.GlobeBlockEntity;
+import committee.nova.mods.dg.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -15,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GlobeBlockItem extends BlockItem {
@@ -23,7 +26,7 @@ public class GlobeBlockItem extends BlockItem {
 	}
 
 	public ItemStack getWithBase(Block base) {
-		ResourceLocation identifier = BuiltInRegistries.BLOCK.getKey(base);
+		ResourceLocation identifier = Services.PLATFORM.getKeyByBlock(base);
 		ItemStack stack = new ItemStack(this);
 		CompoundTag compoundTag = new CompoundTag();
 		compoundTag.putString("base_block", identifier.toString());
@@ -34,7 +37,7 @@ public class GlobeBlockItem extends BlockItem {
 
 
 	@Override
-	public InteractionResult place(BlockPlaceContext context) {
+	public @NotNull InteractionResult place(BlockPlaceContext context) {
 		if (context.getPlayer().level().dimension().equals(CommonClass.globeDimension)) {
 			if (!context.getPlayer().level().isClientSide) {
 				context.getPlayer().displayClientMessage(Component.translatable("globedimension.block.error"), false);
@@ -44,21 +47,19 @@ public class GlobeBlockItem extends BlockItem {
 		return super.place(context);
 	}
 
+
 	@Override
-	protected boolean updateCustomBlockEntityTag(BlockPos pos, Level world, @Nullable Player player, ItemStack stack, BlockState state) {
+	protected boolean updateCustomBlockEntityTag(@NotNull BlockPos pos, @NotNull Level world, @Nullable Player player, ItemStack stack, BlockState state) {
 		if (stack.hasTag() && stack.getOrCreateTag().contains("base_block")) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof GlobeBlockEntity) {
+			if (blockEntity instanceof GlobeBlockEntity globeBlockEntity) {
 				ResourceLocation identifier = new ResourceLocation(stack.getOrCreateTag().getString("base_block"));
-				if (BuiltInRegistries.BLOCK.getOptional(identifier).isPresent()) {
-					((GlobeBlockEntity) blockEntity).setBaseBlock(BuiltInRegistries.BLOCK.get(identifier));
-				}
+				globeBlockEntity.setBaseBlock(Services.PLATFORM.getBlockByKey(identifier));
 				if (stack.getOrCreateTag().contains("globe_id")) {
-					((GlobeBlockEntity) blockEntity).setGlobeID(stack.getOrCreateTag().getInt("globe_id"));
+					globeBlockEntity.setGlobeID(stack.getOrCreateTag().getInt("globe_id"));
 				}
 			}
 		}
 		return super.updateCustomBlockEntityTag(pos, world, player, stack, state);
 	}
-
 }

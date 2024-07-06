@@ -1,4 +1,4 @@
-package committee.nova.mods.dg.net.pkt;
+package committee.nova.mods.dg.common.net.pkt;
 
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.IntSet;

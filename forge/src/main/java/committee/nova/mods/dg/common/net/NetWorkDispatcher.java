@@ -1,10 +1,8 @@
-package committee.nova.mods.dg.net;
+package committee.nova.mods.dg.common.net;
 
 import committee.nova.mods.dg.Constants;
-import committee.nova.mods.dg.common.net.SectionUpdatePkt;
-import committee.nova.mods.dg.common.net.UpdateRequestPkt;
-import committee.nova.mods.dg.net.pkt.ForgeSectionUpdatePkt;
-import committee.nova.mods.dg.net.pkt.ForgeUpdateRequestPkt;
+import committee.nova.mods.dg.common.net.pkt.ForgeSectionUpdatePkt;
+import committee.nova.mods.dg.common.net.pkt.ForgeUpdateRequestPkt;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

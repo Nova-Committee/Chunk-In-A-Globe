@@ -2,8 +2,8 @@ package committee.nova.mods.dg;
 
 import committee.nova.mods.dg.common.net.UpdateRequestPkt;
 import committee.nova.mods.dg.events.BaseEventHandler;
-import committee.nova.mods.dg.globe.GlobeBlockItem;
-import committee.nova.mods.dg.net.NetWorkDispatcher;
+import committee.nova.mods.dg.common.item.GlobeBlockItem;
+import committee.nova.mods.dg.common.net.NetWorkDispatcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;

@@ -1,9 +1,9 @@
-package committee.nova.mods.dg.net.pkt;
+package committee.nova.mods.dg.common.net.pkt;
 
 import committee.nova.mods.dg.CommonClass;
 import committee.nova.mods.dg.common.net.SectionUpdatePkt;
 import committee.nova.mods.dg.common.net.UpdateRequestPkt;
-import committee.nova.mods.dg.net.NetWorkDispatcher;
+import committee.nova.mods.dg.common.net.NetWorkDispatcher;
 import committee.nova.mods.dg.utils.GlobeManager;
 import committee.nova.mods.dg.utils.GlobeSection;
 import net.minecraft.server.level.ServerLevel;
