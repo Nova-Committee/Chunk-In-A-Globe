@@ -30,8 +30,4 @@ public class CommonClass {
     public static BlockEntityType<GlobeBlockEntity> globeBlockEntityType;
     public static DimensionHelper dimensionHelper;
 
-    public static void init() {
-        //globeBlockItem.registerBlocks(Item.BY_BLOCK, globeBlockItem);
-    }
-
 }
